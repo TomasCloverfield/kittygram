@@ -1,4 +1,5 @@
 from django.urls import include, path
+from rest_framework.authtoken import views
 
 # from cats.views import cat_list
 # from cats.views import APICat
@@ -39,6 +40,7 @@ urlpatterns = [
    # Все зарегистрированные в router пути доступны в router.urls
    # Включим их в головной urls.py
    path('', include(router.urls)),
+   path('api-token-auth/', views.obtain_auth_token),
 ]
 
 
