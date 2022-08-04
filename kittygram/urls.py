@@ -3,7 +3,7 @@ from django.urls import include, path
 # from cats.views import cat_list
 # from cats.views import APICat
 # from cats.views import CatList, CatDetail
-from cats.views import CatViewSet, OwnerViewSet
+from cats.views import CatViewSet, OwnerViewSet, LightCatViewSet
 
 from rest_framework.routers import SimpleRouter
 
@@ -13,6 +13,7 @@ router = SimpleRouter()
 # Вызываем метод .register с нужными параметрами
 router.register('cats', CatViewSet)
 router.register('owners', OwnerViewSet)
+router.register(r'mycats', LightCatViewSet)
 
 # Можно указать basename
 # router.register('cats', CatViewSet, basename='tiger')
