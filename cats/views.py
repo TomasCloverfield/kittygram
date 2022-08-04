@@ -7,8 +7,8 @@
 # from rest_framework import status
 from rest_framework import viewsets
 
-from .models import Cat
-from .serializers import CatSerializer
+from .models import Cat, Owner
+from .serializers import CatSerializer, OwnerSerializer
 
 # View функции
 
@@ -83,8 +83,7 @@ class CatViewSet(viewsets.ModelViewSet):
     serializer_class = CatSerializer
 
 
-
-### Просто демонстрация из примера
+# # # Просто демонстрация из примера
 # # Если бы пользователи могли оставлять комментарии к котикам,
 # # то эндпоинт для работы с комментариями выглядел бы примерно так:
 # # cats/{cat_id}/comments/
@@ -92,7 +91,8 @@ class CatViewSet(viewsets.ModelViewSet):
 # class CommentViewSet(viewsets.ModelViewSet):
 #     serializer_class = CommentSerializer
 #     # queryset во вьюсете не указываем
-#     # Нам тут нужны не все комментарии, а только связанные с котом с id=cat_id
+#     # Нам тут нужны не все комментарии, а только связанные с котом с
+#     # id=cat_id
 #     # Поэтому нужно переопределить метод get_queryset и применить фильтр
 #     def get_queryset(self):
 #         # Получаем id котика из эндпоинта
@@ -100,3 +100,7 @@ class CatViewSet(viewsets.ModelViewSet):
 #         # И отбираем только нужные комментарии
 #         new_queryset = Comment.objects.filter(cat=cat_id)
 #         return new_queryset
+
+class OwnerViewSet(viewsets.ModelViewSet):
+    queryset = Owner.objects.all()
+    serializer_class = OwnerSerializer
