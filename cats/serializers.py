@@ -1,4 +1,7 @@
+import datetime as dt
+
 from rest_framework import serializers
+import webcolors
 
 from .models import Cat, Owner, Achievement, AchievementCat
 
@@ -9,13 +12,30 @@ class AchievementSerializer(serializers.ModelSerializer):
         fields = ('id', 'name')
 
 
+# class Hex2NameColor(serializers.Field):
+#     def to_representation(self, value):
+#         # При чтении данных ничего не меняем - просто возвращаем как есть
+#         return value
+#
+#     def to_internal_value(self, data):
+#         try:
+#             data = webcolors.hex_to_name(data)
+#         except ValueError:
+#             raise serializers.ValidationError('No name for this HEX color')
+#         return data
+
+
 class CatSerializer(serializers.ModelSerializer):
     # owner = serializers.StringRelatedField(read_only=True)
     achievements = AchievementSerializer(many=True, required=False)
+    age = serializers.SerializerMethodField()
+    # color = Hex2NameColor()
 
     class Meta:
         model = Cat
-        fields = ('name', 'color', 'birth_year', 'owner', 'achievements')
+        fields = (
+            'name', 'color', 'birth_year', 'owner', 'achievements', 'age'
+        )
 
     def create(self, validated_data):
         if 'achievements' not in self.initial_data:
@@ -39,6 +59,9 @@ class CatSerializer(serializers.ModelSerializer):
                 achievement=current_achievement, cat=cat
             )
         return cat
+
+    def get_age(self, obj):
+        return dt.datetime.now().year - obj.birth_year
 
 
 class OwnerSerializer(serializers.ModelSerializer):
