@@ -139,6 +139,7 @@ class LightCatViewSet(CreateRetrieveViewSet):
 #         new_queryset = Comment.objects.filter(cat=cat_id)
 #         return new_queryset
 
+
 class OwnerViewSet(viewsets.ModelViewSet):
     queryset = Owner.objects.all()
     serializer_class = OwnerSerializer
